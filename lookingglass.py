@@ -1,4 +1,6 @@
 import asyncio
+import datetime
+
 from bleak import BleakScanner
 import time
 
@@ -38,10 +40,14 @@ async def main():
             for company_id in manufacturer_data.keys():
                 if company_id in FILTER_ID:
                     i += 1
+                    current_time = datetime.datetime.now()
+                    simple_time = current_time.strftime("%H:%M:%S")
                     name = device.name or "Unknown"
                     rssi = adv.rssi
                     distance_estimate = rssi_to_distance(rssi)
-                    print(f"{i:2} {name} | Manufacturer ID: 0x{company_id:04X} | Est Distance: {distance_estimate}")
+                    print(f"{i:2} {name} | Manufacturer ID: 0x{company_id:04X} | Est Distance: {distance_estimate} | "
+                          f"{simple_time}")
+        print("========================================================================")
         time.sleep(10)
 
 asyncio.run(main())
