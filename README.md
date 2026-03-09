@@ -25,7 +25,7 @@ It then filters devices based on specific **Bluetooth Manufacturer IDs** associa
 Only devices broadcasting these identifiers are flagged.
 
 By analyzing the **RSSI (Received Signal Strength Indicator)** value from BLE advertisements, an approximate distance can be estimated.
-As the script will return adertisement packets in real-time and at high frequencies, the approximate location of META hardware
+As the script will return advertisement packets in real-time and at high frequencies, the approximate location of META hardware
 can be easily ascertained.
 
 ---
