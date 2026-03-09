@@ -15,15 +15,15 @@ output_file = None
 
 def rssi_to_distance(rssi: int) -> str:
     if rssi >= -60:
-        return "1â€“3m"
+        return "1-3m"
     elif rssi >= -70:
-        return "3â€“10m"
+        return "3-10m"
     elif rssi >= -80:
-        return "10â€“20m"
+        return "10-20m"
     elif rssi >= -90:
-        return "20â€“40m"
+        return "20-40m"
     elif rssi >= -100:
-        return "50â€“100m+ or near signal loss"
+        return "50-100m+"
     else:
         return "Very weak / likely out of range"
 
@@ -71,8 +71,6 @@ async def main():
 
     scanner = BleakScanner(detection_callback=detection_callback)
 
-    #print("Scanning for devices... Press CTRL+C to stop.")
-
     try:
         async with scanner:
             while True:
@@ -86,3 +84,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
