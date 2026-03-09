@@ -1,12 +1,13 @@
 import asyncio
 import argparse
+import datetime
 from bleak import BleakScanner
 
 FILTER_IDS = {
-    0x01AB,
-    0x058E,
-    0x0D53,
-    0x03C2,
+    0x01AB, # Meta Platforms, Inc. (formerly Facebook)
+    0x058E, # Meta Platforms Technologies, LLC
+    0x0D53, # Luxottica Group S.p.A (manufacturer of Ray-Ban Meta glasses)
+    0x03C2, # Snapchat, Inc. (manufacturer of Spectacles)
 }
 
 output_file = None
@@ -14,15 +15,15 @@ output_file = None
 
 def rssi_to_distance(rssi: int) -> str:
     if rssi >= -60:
-        return "1–3m"
+        return "1â€“3m"
     elif rssi >= -70:
-        return "3–10m"
+        return "3â€“10m"
     elif rssi >= -80:
-        return "10–20m"
+        return "10â€“20m"
     elif rssi >= -90:
-        return "20–40m"
+        return "20â€“40m"
     elif rssi >= -100:
-        return "30–100m+ or near signal loss"
+        return "50â€“100m+ or near signal loss"
     else:
         return "Very weak / likely out of range"
 
@@ -34,17 +35,20 @@ def detection_callback(device, adv_data):
         return
 
     for company_id in manufacturer_data.keys():
-        if company_id not in FILTER_IDS:
+        if company_id in FILTER_IDS:
 
             name = device.name or "Unknown"
             rssi = adv_data.rssi
             distance = rssi_to_distance(rssi)
+            current_time = datetime.datetime.now()
+            simple_time = current_time.strftime("%H:%M:%S")
 
             line = (
                 f"Device: {name} | "
                 f"Manufacturer: 0x{company_id:04X} | "
                 f"RSSI: {rssi} dBm | "
-                f"Est. Distance: {distance}"
+                f"Est. Distance: {distance} | "
+                f"{simple_time}"
             )
 
             print(line)
@@ -67,7 +71,7 @@ async def main():
 
     scanner = BleakScanner(detection_callback=detection_callback)
 
-    print("Scanning for devices... Press CTRL+C to stop.")
+    #print("Scanning for devices... Press CTRL+C to stop.")
 
     try:
         async with scanner:
