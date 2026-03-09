@@ -1,8 +1,6 @@
 # 🔍 Meta Lookingglass
 
-A simple Python Bluetooth scanner used to detect nearby **Ray-Ban Meta smart glasses**.
-
-This project is intended as a lightweight proof-of-concept, with future plans to deploy it on a Raspberry Pi or other portable embedded device.
+Python Bluetooth scanner/monitor used to detect nearby **Ray-Ban Meta smart glasses**.
 
 ---
 
